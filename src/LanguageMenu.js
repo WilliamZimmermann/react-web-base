@@ -28,7 +28,7 @@ function LanguageMenu() {
     };
     
   return (
-    <div class="Language-menu">
+    <div className="Language-menu">
         <IconButton
             aria-label="system language"
             aria-controls="menu-appbar"

@@ -27,7 +27,7 @@ function UserMenu() {
     };
     
   return (
-    <div class="User-menu">
+    <div className="User-menu">
         <IconButton
             aria-label="account of current user"
             aria-controls="menu-appbar"

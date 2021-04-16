@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -106,21 +106,29 @@ const useStyles = makeStyles((theme) => ({
         marginRight: 33,
         fontSize: 20,
         color: 'darkblue',
-      }
+      },
 }));
 
-function Header() {
-    const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
-
-    const handleDrawerOpen = () => {
-      setOpen(true);
-    };
+function Header(props) {
+  const classes = useStyles();
   
-    const handleDrawerClose = () => {
-      setOpen(false);
-    };
-      
+  const [open, setOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState(props.searchValue);
+  const [appsList, setAppList] = useState(applications.apps);
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
+  function handleSearchBarChange(evt){
+    setSearchValue(evt.target.value);
+    setAppList(applications.apps.filter(app => app.appName.includes(evt.target.value)));
+  }
+
   return (
     <header className="Header">
         <div className={classes.root}>
@@ -168,14 +176,14 @@ function Header() {
                 }}
             >
                 <div className={classes.topMenu}>
-                    <SearchBar></SearchBar>
+                    <SearchBar onSearchValueChange={handleSearchBarChange} searchValue={props.searchValue}></SearchBar>
                     <IconButton onClick={handleDrawerClose}>
                         <ChevronRightIcon />
                     </IconButton>
                 </div>
                 <Divider />
                 <List>
-                {applications.apps.map((content, index) => (
+                {appsList.map((content, index) => (
                     <ListItem button key={content.appName}>
                       <div className={classes.sideBarMenuIcon}><FontAwesomeIcon icon={content.iconClass} /></div>
                       <ListItemText primary={content.appName} />
