@@ -12,14 +12,16 @@ import Divider from '@material-ui/core/Divider';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 
 import UserMenu from './UserMenu';
 import LanguageMenu from './LanguageMenu';
 import SearchBar from './SearchBar';
+
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+import applications from './fake-data/applications.json';
 
 const drawerWidth = 240;
 const headerBarHeight = 49;
@@ -100,6 +102,11 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'flex-end',
         padding: theme.spacing(0, 1),
       },
+      sideBarMenuIcon: {
+        marginRight: 33,
+        fontSize: 20,
+        color: 'darkblue',
+      }
 }));
 
 function Header() {
@@ -168,19 +175,10 @@ function Header() {
                 </div>
                 <Divider />
                 <List>
-                {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                    <ListItem button key={text}>
-                    <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                    <ListItemText primary={text} />
-                    </ListItem>
-                ))}
-                </List>
-                <Divider />
-                <List>
-                {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                    <ListItem button key={text}>
-                    <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                    <ListItemText primary={text} />
+                {applications.apps.map((content, index) => (
+                    <ListItem button key={content.appName}>
+                      <div className={classes.sideBarMenuIcon}><FontAwesomeIcon icon={content.iconClass} /></div>
+                      <ListItemText primary={content.appName} />
                     </ListItem>
                 ))}
                 </List>

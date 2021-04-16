@@ -1,0 +1,22 @@
+{
+    "apps": [
+        {
+            "id": "home",
+            "appName": "Home",
+            "appRoute": "home",
+            "iconClass": "home"
+        },
+        {
+            "id": "users",
+            "appName": "Users",
+            "appRoute": "users",
+            "iconClass": "id-card"
+        },
+        {
+            "id": "settings",
+            "appName": "Settings",
+            "appRoute": "settings",
+            "iconClass": "cogs"
+        }
+    ]
+}
