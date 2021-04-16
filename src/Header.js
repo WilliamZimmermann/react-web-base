@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -12,14 +12,16 @@ import Divider from '@material-ui/core/Divider';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 
 import UserMenu from './UserMenu';
 import LanguageMenu from './LanguageMenu';
 import SearchBar from './SearchBar';
+
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+import applications from './fake-data/applications.json';
 
 const drawerWidth = 240;
 const headerBarHeight = 49;
@@ -100,20 +102,33 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'flex-end',
         padding: theme.spacing(0, 1),
       },
+      sideBarMenuIcon: {
+        marginRight: 33,
+        fontSize: 20,
+        color: 'darkblue',
+      },
 }));
 
-function Header() {
-    const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
-
-    const handleDrawerOpen = () => {
-      setOpen(true);
-    };
+function Header(props) {
+  const classes = useStyles();
   
-    const handleDrawerClose = () => {
-      setOpen(false);
-    };
-      
+  const [open, setOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState(props.searchValue);
+  const [appsList, setAppList] = useState(applications.apps);
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
+  function handleSearchBarChange(evt){
+    setSearchValue(evt.target.value);
+    setAppList(applications.apps.filter(app => app.appName.includes(evt.target.value)));
+  }
+
   return (
     <header className="Header">
         <div className={classes.root}>
@@ -161,26 +176,17 @@ function Header() {
                 }}
             >
                 <div className={classes.topMenu}>
-                    <SearchBar></SearchBar>
+                    <SearchBar onSearchValueChange={handleSearchBarChange} searchValue={props.searchValue}></SearchBar>
                     <IconButton onClick={handleDrawerClose}>
                         <ChevronRightIcon />
                     </IconButton>
                 </div>
                 <Divider />
                 <List>
-                {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                    <ListItem button key={text}>
-                    <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                    <ListItemText primary={text} />
-                    </ListItem>
-                ))}
-                </List>
-                <Divider />
-                <List>
-                {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                    <ListItem button key={text}>
-                    <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                    <ListItemText primary={text} />
+                {appsList.map((content, index) => (
+                    <ListItem button key={content.appName}>
+                      <div className={classes.sideBarMenuIcon}><FontAwesomeIcon icon={content.iconClass} /></div>
+                      <ListItemText primary={content.appName} />
                     </ListItem>
                 ))}
                 </List>

@@ -37,11 +37,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function SearchBar() {
+function SearchBar(props) {
     const classes = useStyles();
     
   return (
-    <div class="Search-bar">
+    <div className="Search-bar">
         <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -53,6 +53,8 @@ function SearchBar() {
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
+              onChange={props.onSearchValueChange}
+              value={props.searchValue}
             />
           </div>
     </div>
