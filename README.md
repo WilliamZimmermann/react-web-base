@@ -1,8 +1,15 @@
-# Getting Started with Create React App
+# TicketMaster test
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Hello! This is a TicketMaster technical interview test. Take a look in the instructions, please:
 
-## Available Scripts
+# Would you like just to run the Builded App?
+
+1. Open your terminal
+2. Go to this project directory
+3. Run serve -s build
+4. A local address will be served and you can open it in your browser (ex.: http://localhost:5000)
+
+## Would you like to run the project in dev mode?
 
 In the project directory, you can run:
 
